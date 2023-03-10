@@ -1,6 +1,6 @@
 const {
   getAllLaunches,
-  addNewLaunch,
+  scheduleNewLaunch,
   existLaunchWithId,
   abortLaunchById,
 } = require('../../models/launches.model');
@@ -9,7 +9,7 @@ async function httpGetAllLaunches(req, res) {
   return res.status(200).json(await getAllLaunches());
 }
 
-function httpAddNewLaunch(req, res) {
+async function httpAddNewLaunch(req, res) {
   const launch = req.body; //Here req.body return json object because of middleware (app.use(express.json()))
 
   if (
@@ -28,22 +28,23 @@ function httpAddNewLaunch(req, res) {
       error: 'Invalid launch date',
     });
   }
-  addNewLaunch(launch);
+  await scheduleNewLaunch(launch);
   return res.status(201).json(launch);
 }
 
-function httpAbortLaunch(req, res) {
+async function httpAbortLaunch(req, res) {
   const launchId = Number(req.params.id);
 
   // If launch doesn't exist
-  if (!existLaunchWithId(launchId)) {
+  const existsLaunch = await existLaunchWithId(launchId);
+  if (!existsLaunch) {
     return res.status(404).json({
       error: 'Launch not found',
     });
   }
 
   // If launch does exist
-  const aborted = abortLaunchById(launchId);
+  const aborted = await abortLaunchById(launchId);
   return res.status(200).json(aborted);
 }
 
