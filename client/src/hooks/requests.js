@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = 'http://localhost:8000/v1';
 
 // Load planets and return as JSON.
 async function httpGetPlanets() {
@@ -19,9 +19,9 @@ async function httpGetLaunches() {
 async function httpSubmitLaunch(launch) {
   try {
     return await fetch(`${API_URL}/launches`, {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(launch),
     });
@@ -36,7 +36,7 @@ async function httpSubmitLaunch(launch) {
 async function httpAbortLaunch(id) {
   try {
     return await fetch(`${API_URL}/launches/${id}`, {
-      method: "delete",
+      method: 'delete',
     });
   } catch (err) {
     console.log(err);
