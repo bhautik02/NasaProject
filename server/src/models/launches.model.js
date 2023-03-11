@@ -93,17 +93,16 @@ async function scheduleNewLaunch(launch) {
 
 // Deleting launch by using id
 async function abortLaunchById(launchId) {
-  return await launchesData.updateOne(
-    { flightNumber: launchId },
+  const aborted = await launchesData.updateOne(
+    {
+      flightNumber: launchId,
+    },
     {
       upcoming: false,
       success: false,
     }
   );
-  // const aborted = launches.get(launchId);
-  // aborted.upcoming = false;
-  // aborted.success = false;
-  // return aborted;
+  return aborted.modifiedCount === 1;
 }
 
 launches.set(launch.flightNumber, launch);
