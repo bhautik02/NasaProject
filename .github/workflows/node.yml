@@ -14,15 +14,32 @@ jobs:
         node-version: [14.x, 16.x, 18.x]
         mongodb-version: ['4.4']
     runs-on: ubuntu-latest
+    # steps:
+    #   - uses: actions/checkout@v2
+    #   - name: Use Node.js version ${{ matrix.node-version }}
+    #     uses: actions/setup-node@v2
+    #     with:
+    #       node-version: ${{ matrix.node-version }}
+    #   -name: Use Mongodb from Github actions
+    #     uses: supercharge/mongodb-github-action@1.6.0
+    #     with:
+    #       mongodb-version: ${{ matrix.mongodb-version }}
+    #   - run: npm install
+    #   - run: npm run build --prefix client
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js version ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Git checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      -name: Use Mongodb from Github actions
+
+      - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.6.0
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
+
       - run: npm install
-      - run: npm run build --prefix client
+
+      - run: npm test
