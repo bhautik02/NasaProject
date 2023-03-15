@@ -20,7 +20,7 @@ jobs:
     #     uses: actions/setup-node@v2
     #     with:
     #       node-version: ${{ matrix.node-version }}
-    #   -name: Use Mongodb from Github actions
+    #   - name: Use Mongodb from Github actions
     #     uses: supercharge/mongodb-github-action@1.6.0
     #     with:
     #       mongodb-version: ${{ matrix.mongodb-version }}
