@@ -1,9 +1,8 @@
 const http = require('http');
-// const mongoose = require('mongoose');
-require('dotenv').config({ path: '.env' });
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, './services/.env') });
 const app = require('./app');
 const { mongoConnect } = require('./services/mongo');
-
 const { loadPlanetsData } = require('./models/planets.model');
 const { loadLaunchData } = require('./models/launches.model');
 
